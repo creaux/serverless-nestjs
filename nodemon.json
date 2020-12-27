@@ -1,0 +1,7 @@
+{
+  "verbose": false,
+  "ignore": ["build/*", "public/*", "views/*" ,"node_modules/*", "src/*"],
+  "watch": ["node_modules/@pyxismedia/lib-nest-stripe/dist/index.js"],
+  "ext": "js",
+  "exec": "npm run start:dev"
+}

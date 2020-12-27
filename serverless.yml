@@ -3,7 +3,15 @@ service: serverless-nestjs
 provider:
   name: aws
   runtime: nodejs12.x
-  region: us-east-1
+  region: eu-west-1
+  tracing:
+    apiGateway: true
+  stage: ${opt:stage, 'dev'}
+  environment:
+    INVOICES_TABLE_NAME: ${self:custom:InvoicesTable.name}
+  iamRoleStatement:
+    - ${file(iam/InvoicesTableIAM.yml):InvoicesTableIAM}
+
 
 plugins:
   - serverless-offline
@@ -17,6 +25,10 @@ package:
     - nodemon.json
     - README.md
 
+resources:
+  Resources:
+    InvoicesTable: ${file(resources/InvoicesTable.yml):InvoicesTable}
+
 functions:
   index:
     handler: dist/index.handler
@@ -29,3 +41,8 @@ functions:
         cors: true
         path: '{proxy+}'
         method: any
+
+custom:
+  InvoicesTable:
+    name: !Ref InvoicesTable
+    arn: !GetAtt InvoicesTable.Arn
