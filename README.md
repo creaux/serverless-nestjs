@@ -1,3 +1,7 @@
 # Template for Server
 
-This template intents to be used for REST API server.
+Most basic template for NestJS application server.
+
+For avalaible commands run the following.
+
+`npm run`
