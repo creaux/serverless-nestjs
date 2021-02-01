@@ -1,18 +1,29 @@
 import { NestFactory } from '@nestjs/core';
-import { NestApplicationOptions } from '@nestjs/common';
-import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import { Builder } from './builder';
+import { Builder } from '@creaux/lib-common';
+import { NestMicroserviceOptions } from '@nestjs/common/interfaces/microservices/nest-microservice-options.interface';
+import {
+  MicroserviceOptions,
+  RedisOptions,
+  Transport,
+} from '@nestjs/microservices';
+import { Logger } from '@nestjs/common';
+
+const logger = new Logger('Bootstrap');
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
-    Builder<NestApplicationOptions>()
-      .logger(['log', 'error', 'warn', 'debug', 'verbose'])
+    Builder<RedisOptions & NestMicroserviceOptions>()
+      .transport(Transport.REDIS)
+      .options({ host: process.env.MICROSERVICE_HOST })
+      .logger(['error', 'warn', 'log', 'verbose', 'debug'])
       .build(),
   );
 
-  await app.listen(5002);
+  await app.listen(() => {
+    logger.log('Microservice is listening...');
+  });
 }
 
 bootstrap();
