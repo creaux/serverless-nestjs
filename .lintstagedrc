@@ -1,0 +1,5 @@
+{
+  "*.{ts}": [
+    "prettier --single-quote --write"
+  ]
+}
