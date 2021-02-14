@@ -1,7 +1,0 @@
-{
-  "hooks": {
-    "pre-commit": "lint-staged -c .lintstagedrc && tsc -p tsconfig.d.json",
-    "pre-push": "package-lock-check && npm test -- --watchAll=false && npm run test:e2e -- --watchAll=false && npm run build:dry-run",
-    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-  }
-}

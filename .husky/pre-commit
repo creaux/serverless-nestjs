@@ -1,0 +1,2 @@
+npx lint-staged -c .lintstagedrc
+npx tsc -p tsconfig.build.json

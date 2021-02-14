@@ -1,0 +1,4 @@
+npx package-lock-check
+npm test -- --watchAll=false
+npm run test:e2e -- --watchAll=false
+npm run build
